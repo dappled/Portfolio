@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import project.dataStructure.CircularList;
 import utils.ParseDateLong;
 
 /**
@@ -17,19 +18,21 @@ import utils.ParseDateLong;
 public class MomentumStrategyProcessor implements I_DBProcessor {
 	private boolean									_isFinished;
 
-	private final int								_lag, _hold;
+	private CircularList<Double>					_lag, _gap, _hold;
 	private LinkedHashMap<Long, ArrayList<Double>>	_buffer;
 
 	private LinkedHashMap<Long, Double>				_portReturn;
 
 	/***********************************************************************
 	 * Constructor
+	 * @throws Exception 
 	 ***********************************************************************/
-	public MomentumStrategyProcessor(int lag, int hold) throws IOException {
+	public MomentumStrategyProcessor(int lag, int gap, int hold) throws Exception {
 		_isFinished = false;
 
-		_lag = lag;
-		_hold = hold;
+		_lag = new CircularList<>( lag );
+		_hold = new CircularList<>( hold );
+		_gap = new CircularList<>( gap );
 
 		_buffer = new LinkedHashMap<>();
 	}
