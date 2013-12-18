@@ -58,6 +58,7 @@ public class CircularList<ValType> implements QInterface<ValType> {
 	public int size() {
 		return _count;
 	}
+	
 
 	public boolean isReady() {
 		return _count == _fullSize;
@@ -73,10 +74,13 @@ public class CircularList<ValType> implements QInterface<ValType> {
 		CircularList<Double> test = new CircularList<>( 3 );
 		
 		test.addLast( 3.0 );
+		System.out.println(test.isReady());
 		test.addLast( 2.0 );
 		test.addLast( 1.0 );
+		System.out.println(test.isReady());
 		test.removeFirst(); // should now be {2;1}
-
+		System.out.println(test.isReady());
+		
 		test.addLast( 4.0 ); // should now be {2;1;4}
 		System.out.println(test.addLast( 10.0 )); // should remove 2, and be {1;4;10}
 		System.out.println(test.addLast( 20.0 )); // should remove 1, and be {4;10;20}
@@ -85,6 +89,11 @@ public class CircularList<ValType> implements QInterface<ValType> {
 		System.out.println(test.getFirstValue()); // should return 10
 		System.out.println(test.getLastValue()); // should return 30
 		
+		int[] a = {1,2,3};
+		int[] b = a.clone();
+		b[0] = 9;
+		System.out.println(a[0]);
+		System.out.println(b[0]);
 		System.out.printf( "End");
 	}
 

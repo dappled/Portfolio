@@ -20,12 +20,13 @@ public interface I_DBProcessor {
 	 * @param readers                List of readers, the first n of which have new data, where n = numReadersWithNewData
 	 * 
 	 * @return True if I_DBProcessor is not finished and false if it is.
+	 * @throws Exception 
 	 */
 	public boolean processReaders( 
 			long sequenceNumber,				// Sequence number of the data that was just read
 			int numReadersWithNewData, 			// Number of readers with new data
 			LinkedList<I_DBReader> readers 	// List of readers - the first n of which have new data - where n = numReadersWithNewData
-		);
+		) throws Exception;
 	
 	/**
 	 * Method used by external objects to stop this processor, which

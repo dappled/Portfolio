@@ -162,7 +162,7 @@ public class DataParserManager {
 			if (numRecsRead > 0) {
 				_numReadersWithNewData++;
 			}
-			
+
 		} while (dbReaderIterator.hasNext());
 
 	}
@@ -172,14 +172,18 @@ public class DataParserManager {
 	 * by all of the readers in the last readChunk call.
 	 * 
 	 * @param sequenceNumber Sequence number that was just read by all readers
+	 * @throws Exception
 	 */
 	public void processChunk(long sequenceNumber) {
 		Iterator<I_DBProcessor> processorIterator = _processors.iterator();
-		while (processorIterator.hasNext()) {
-			I_DBProcessor processor = processorIterator.next();
-			if (!processor.processReaders( sequenceNumber, _numReadersWithNewData, _readers )) processorIterator
-					.remove();
-		}
+		while (processorIterator.hasNext())
+			try {
+				I_DBProcessor processor = processorIterator.next();
+				if (!processor.processReaders( sequenceNumber, _numReadersWithNewData, _readers )) processorIterator
+						.remove();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 	}
 
@@ -227,8 +231,9 @@ public class DataParserManager {
 	 * than the above sequence number.
 	 * 
 	 * 5) Tell all processors to process all data read by the readers.
+	 * @throws Exception
 	 */
-	public void launch() {
+	public void launch() throws Exception {
 
 		while (!_dbClock.isFinished()) {
 
